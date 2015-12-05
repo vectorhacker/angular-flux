@@ -1,4 +1,6 @@
 import {Injectable} from 'angular2/angular2'
+
+// Include other services
 import {Dispatcher as ChatAppDispatcher} from '../dispatcher/ChatAppDispatcher'
 import {ChatConstants} from '../constants/ChatConstants'
 import {ChatMessageUtils} from '../utils/ChatMessageUtils'
@@ -7,18 +9,22 @@ import {ThreadStore} from './ThreadStore'
 let ActionTypes = ChatConstants.ActionTypes;
 let CHANGE_EVENT = 'change';
 
+// Injectable store extends EventEmitter class from eventemitter3.
+// Igore erros on eventemitter3
 @Injectable()
 export class MessageStore extends EventEmitter {
 
 	private _messages = {};
 	public dispatchToken;
 
+	// Inject dispatcher and ThreadStore
 	constructor(private chatAppDispatcher: ChatAppDispatcher,
 		private threadStore: ThreadStore) {
 		super()
 		this._register();
 	}
 
+	// listen for dispatches
 	private _onDispatch(action) {
 
 		switch (action.type) {
@@ -57,6 +63,7 @@ export class MessageStore extends EventEmitter {
 
 	}
 
+	// Register a callback to the dispatcher
 	private _register() {
 		this.dispatchToken = this.chatAppDispatcher.register(this._onDispatch.bind(this));
 	}

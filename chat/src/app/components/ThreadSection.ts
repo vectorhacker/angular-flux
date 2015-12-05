@@ -3,6 +3,8 @@ import {ThreadListItem} from './ThreadListItem'
 import {ThreadStore} from '../stores/ThreadStore'
 import {UnreadThreadStore} from '../stores/UnreadThreadStore'
 
+
+// Illustrates use of input property attributes and data binding to them.
 @Component({
   selector: 'ThreadSection',
   template: `
@@ -31,7 +33,9 @@ export class ThreadSection {
     return this.currentThreadID;
   }
 
+  // Include needed models
   constructor(private threadStore: ThreadStore, private unreadThreadStore: UnreadThreadStore) {
+    // Start listening for changes on model
     this.threadStore.addChangeListener(this._onChange.bind(this));
 
     this.getInitialState();
@@ -60,6 +64,7 @@ export class ThreadSection {
     this.unreadCount = state.unreadCount;
   }
 
+  // Listen for changes on model
   private _onChange() {
     this.setState(this.getStateFromStores());
   }

@@ -9,8 +9,7 @@ import {ChatMessageUtils} from '../utils/ChatMessageUtils'
 let ActionTypes = ChatConstants.ActionTypes;
 let CHANGE_EVENT = 'change';
 
-//declare class EventEmitter extends EventEmitter3.EventEmitter {}
-
+// Injectable service
 @Injectable()
 export class ThreadStore extends EventEmitter {
 
@@ -18,17 +17,20 @@ export class ThreadStore extends EventEmitter {
 	private _threads = {};
 	public dispatchToken: number;
 
+	// Inject dispatcher as a dependancy
 	constructor(private chatAppDispatcher: ChatAppDispatcher) {
 		super()
 		this._register();
 	}
 
+	// Register to the dispatcher
 	private _register() {
 		this.dispatchToken = this
 			.chatAppDispatcher
 			.register(this._onAction.bind(this));
 	}
 
+	// Listen for dispatch events
 	private _onAction(action) {
 
 		switch (action.type) {

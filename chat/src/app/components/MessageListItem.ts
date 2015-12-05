@@ -1,5 +1,6 @@
 import {Component, Input} from 'angular2/angular2'
 
+// Illustrates Input attributes
 @Component({
 	selector: 'MessageListItem',
 	template: `
@@ -13,5 +14,5 @@ import {Component, Input} from 'angular2/angular2'
 	`
 })
 export class MessageListItem {
-	@Input() message 
+	@Input() message // bindable message attribute on component
 }

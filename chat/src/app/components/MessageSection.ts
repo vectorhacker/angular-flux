@@ -5,6 +5,8 @@ import {MessageStore} from '../stores/MessageStore'
 import {MessageListItem} from './MessageListItem'
 import {MessageComposer} from './MessageComposer'
 
+// Illustrates use of data binding to input attributes
+// Illustrates use of ng-for directive API
 @Component({
 	selector: 'MessageSection',
 	template: `
@@ -17,13 +19,16 @@ import {MessageComposer} from './MessageComposer'
         <MessageComposer [thread-id]="thread.id"/>
       </div>
 	`,
-	directives: [CORE_DIRECTIVES, MessageListItem, MessageComposer]
+	directives: [CORE_DIRECTIVES, MessageListItem, MessageComposer] // Include CORE_DIRECTIVES and custom components for use in template
 })
 export class MessageSection {
 	messages = [];
 	thread = {}
+	
+	// Inject needed models
 	constructor(private threadStore: ThreadStore, private messageStore: MessageStore) {
 		this.setState(this.getStateFromStores());
+		// Start listening for changes on models
 		this.threadStore.addChangeListener(this._onChange.bind(this))
 		this.messageStore.addChangeListener(this._onChange.bind(this))
 	}
@@ -45,6 +50,7 @@ export class MessageSection {
 		this.thread = state.thread;
 	}
 
+	// Listen for changes on models and update properties 
 	private _onChange() {
 		this.setState(this.getStateFromStores());
 	}

@@ -1,6 +1,7 @@
 import {Injectable} from 'angular2/angular2'
 
-
+// Custom dispatcher based on FLUX TodoMVC example dispather
+// Injectable Angular2 service (Singleton)
 @Injectable()
 export class Dispatcher {
 	private callbacks: Array<Function> = [];

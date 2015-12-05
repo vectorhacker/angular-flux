@@ -2,7 +2,7 @@ import {Component, Input, CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/angul
 import {ChatMessageActionCreators} from '../actions/ChatMessageActionCreators'
 
 let ENTER_KEY_CODE = 13
-
+// Illustrates two-way data binding and events
 @Component({
 	selector: 'MessageComposer',
 	template: `
@@ -13,12 +13,12 @@ let ENTER_KEY_CODE = 13
         (keydown)="_onKeyDown($event)"
       />
 	`,
-	directives: [CORE_DIRECTIVES, FORM_DIRECTIVES]
+	directives: [CORE_DIRECTIVES, FORM_DIRECTIVES]  // FORM_DIRECTIVES is needed for two-way binding
 })
 export class MessageComposer {
 	@Input('thread-id') threadId;
 
-	text = '';
+	text = ''; // Two-way data-binded property
 
 	constructor(private chatMessageActionCreators: ChatMessageActionCreators) {
 

@@ -1,8 +1,7 @@
 import {Component, Input, CORE_DIRECTIVES} from 'angular2/angular2'
 import {ChatThreadActionCreators} from '../actions/ChatThreadActionCreators'
 
-
-
+// Use of ngClass directive and events
 @Component({
         selector: 'ThreadListItem',
         template: `
@@ -24,9 +23,9 @@ import {ChatThreadActionCreators} from '../actions/ChatThreadActionCreators'
         directives: [CORE_DIRECTIVES],
 })
 export class ThreadListItem {
-        @Input() key;
-        @Input() thread;
-        @Input('current-thread') currentThreadId;
+        @Input() key; // key input attribute
+        @Input() thread; // thred input attribute
+        @Input('current-thread') currentThreadId; // different name for input attribute from internal component property name
         
         private chatThreadActionCreators: ChatThreadActionCreators;
 
