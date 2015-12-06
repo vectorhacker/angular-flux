@@ -1,4 +1,4 @@
-import {Injectable} from 'angular2/angular2'
+import {Injectable, EventEmitter} from 'angular2/angular2'
 import {Dispatcher as ChatAppDispatcher} from '../dispatcher/ChatAppDispatcher'
 import {ChatConstants} from '../constants/ChatConstants'
 import {ChatMessageUtils} from '../utils/ChatMessageUtils'
@@ -10,34 +10,34 @@ let CHANGE_EVENT = 'change';
 
 // Injectable service
 @Injectable()
-export class UnreadThreadStore extends EventEmitter {
+export class UnreadThreadStore extends EventEmitter<string> {
 
 	public dispatchToken: number;
 
-	constructor(private chatAppDispatcher: ChatAppDispatcher,
-		private threadStore: ThreadStore,
-		private messageStore: MessageStore) {
+	constructor(private chatAppDispatcher: ChatAppDispatcher, private threadStore: ThreadStore, private messageStore: MessageStore) {
+
 		super()
 		this._register();
 	}
 
-	emitChange() {
-		this.emit(CHANGE_EVENT);
+	private emitChange() {
+		// this.emit(CHANGE_EVENT);
+		this.emit(CHANGE_EVENT)
 	}
 
-	/**
-	 * @param {function} callback
-	 */
-	addChangeListener(callback) {
-		this.on(CHANGE_EVENT, callback);
-	}
+	// /**
+	//  * @param {function} callback
+	//  */
+	// addChangeListener(callback) {
+	// 	this.on(CHANGE_EVENT, callback);
+	// }
 
-	/**
-	 * @param {function} callback
-	 */
-	removeChangeListener(callback) {
-		this.removeListener(CHANGE_EVENT, callback);
-	}
+	// /**
+	//  * @param {function} callback
+	//  */
+	// removeChangeListener(callback) {
+	// 	this.removeListener(CHANGE_EVENT, callback);
+	// }
 
 	getCount() {
 		var threads = this.threadStore.getAll();
@@ -62,7 +62,7 @@ export class UnreadThreadStore extends EventEmitter {
 			this.messageStore.dispatchToken
 		], () => {
 			switch (action.type) {
-				
+
 				case ActionTypes.RECEIVE_MESSAGES:
 				case ActionTypes.RECEIVE_MESSAGE:
 				case ActionTypes.CLICK_THREAD:

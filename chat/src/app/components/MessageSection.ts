@@ -11,13 +11,13 @@ import {MessageComposer} from './MessageComposer'
 	selector: 'MessageSection',
 	template: `
 	<div class="message-section">
-        <h3 class="message-thread-heading">{{thread.name}}</h3>
-        <ul class="message-list" ref="messageList">
-          <MessageListItem *ng-for="#message of messages"
-			[message]="message" ></MessageListItem>
-        </ul>
-        <MessageComposer [thread-id]="thread.id"/>
-      </div>
+		<h3 class="message-thread-heading">{{thread.name}}</h3>
+		<ul class="message-list" ref="messageList">
+			<MessageListItem *ng-for="#message of messages"
+				[message]="message" ></MessageListItem>
+		</ul>
+		<MessageComposer [thread-id]="thread.id"></MessageComposer>
+	</div>
 	`,
 	directives: [CORE_DIRECTIVES, MessageListItem, MessageComposer] // Include CORE_DIRECTIVES and custom components for use in template
 })
@@ -29,13 +29,13 @@ export class MessageSection {
 	constructor(private threadStore: ThreadStore, private messageStore: MessageStore) {
 		this.setState(this.getStateFromStores());
 		// Start listening for changes on models
-		this.threadStore.addChangeListener(this._onChange.bind(this))
-		this.messageStore.addChangeListener(this._onChange.bind(this))
+		this.threadStore.subscribe(this._onChange.bind(this))
+		this.messageStore.subscribe(this._onChange.bind(this))
 	}
 
 	ngOnDestroy() {
-		this.messageStore.removeChangeListener(this._onChange.bind(this));
-		this.threadStore.removeChangeListener(this._onChange.bind(this));
+		this.messageStore.unsubscribe();
+		this.threadStore.unsubscribe();
 	}
 
 	getStateFromStores() {

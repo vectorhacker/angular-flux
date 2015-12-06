@@ -7,11 +7,10 @@ let ENTER_KEY_CODE = 13
 	selector: 'MessageComposer',
 	template: `
 	<textarea
-        class="message-composer"
-        name="message"
-        [(ng-model)]="text"
-        (keydown)="_onKeyDown($event)"
-      />
+		class="message-composer"
+		name="message"
+		[(ng-model)]="text"
+		(keydown)="_onKeyDown($event)"></textarea>
 	`,
 	directives: [CORE_DIRECTIVES, FORM_DIRECTIVES]  // FORM_DIRECTIVES is needed for two-way binding
 })

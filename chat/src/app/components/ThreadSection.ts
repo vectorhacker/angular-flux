@@ -8,19 +8,20 @@ import {UnreadThreadStore} from '../stores/UnreadThreadStore'
 @Component({
   selector: 'ThreadSection',
   template: `
-	  <div class="thread-section">
-        <div class="thread-count">
-          <span *ng-if="unreadCount !== 0">
-            Unread threads: {{unreadCount}}
-          </span>
-        </div>
-        <ul class="thread-list">
-          <ThreadListItem *ng-for="#thread of threads"
-            [key]="thread.id"
-            [thread]="thread"
-            [current-thread]="getCurrentThreadID()"></ThreadListItem>
-          </ul>
-      </div>
+  <div class="thread-section">
+    <div class="thread-count">
+        <span *ng-if="unreadCount !== 0">
+        Unread threads: {{unreadCount}}
+        </span>
+    </div>
+    <ul class="thread-list">
+      <ThreadListItem *ng-for="#thread of threads"
+        [key]="thread.id"
+        [thread]="thread"
+        [current-thread]="getCurrentThreadID()">
+      </ThreadListItem>
+    </ul>
+  </div>
 	`,
   directives: [ThreadListItem, CORE_DIRECTIVES]
 })
@@ -36,8 +37,11 @@ export class ThreadSection {
   // Include needed models
   constructor(private threadStore: ThreadStore, private unreadThreadStore: UnreadThreadStore) {
     // Start listening for changes on model
-    this.threadStore.addChangeListener(this._onChange.bind(this));
-
+    // this.threadStore.addChangeListener(this._onChange.bind(this));
+    //this.unreadThreadStore.addChangeListener(this._onChange.bind(this));
+    this.threadStore.subscribe(this._onChange.bind(this))
+    this.unreadThreadStore.subscribe(this._onChange.bind(this))
+    
     this.getInitialState();
   }
 
@@ -55,7 +59,10 @@ export class ThreadSection {
   }
 
   ngOnDestroy() {
-    this.threadStore.removeChangeListener(this._onChange.bind(this));
+    // this.threadStore.removeChangeListener(this._onChange.bind(this));
+    //this.unreadThreadStore.removeChangeListener(this._onChange.bind(this));
+    this.threadStore.unsubscribe();
+    this.unreadThreadStore.unsubscribe();
   }
   
   private setState(state) {

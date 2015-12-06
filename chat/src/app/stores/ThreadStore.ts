@@ -1,7 +1,7 @@
 /// <reference path="../../typings/tsd.d.ts" />
 
 
-import {Injectable} from 'angular2/angular2'
+import {Injectable, EventEmitter} from 'angular2/angular2'
 import {Dispatcher as ChatAppDispatcher} from '../dispatcher/ChatAppDispatcher'
 import {ChatConstants} from '../constants/ChatConstants'
 import {ChatMessageUtils} from '../utils/ChatMessageUtils'
@@ -11,7 +11,7 @@ let CHANGE_EVENT = 'change';
 
 // Injectable service
 @Injectable()
-export class ThreadStore extends EventEmitter {
+export class ThreadStore extends EventEmitter<string> {
 
 	private _currentID = null;
 	private _threads = {};
@@ -83,23 +83,23 @@ export class ThreadStore extends EventEmitter {
 		this._threads[this._currentID].lastMessage.isRead = true;
 	}
 
-	emitChange() {
+	private emitChange() {
 		this.emit(CHANGE_EVENT);
 	}
 
-	/**
-	 * @param {function} callback
-	 */
-	addChangeListener(callback) {
-		this.on(CHANGE_EVENT, callback);
-	}
+	// /**
+	//  * @param {function} callback
+	//  */
+	// addChangeListener(callback) {
+	// 	this.on(CHANGE_EVENT, callback);
+	// }
 
-	/**
-	 * @param {function} callback
-	 */
-	removeChangeListener(callback) {
-		this.removeListener(CHANGE_EVENT, callback);
-	}
+	// /**
+	//  * @param {function} callback
+	//  */
+	// removeChangeListener(callback) {
+	// 	this.removeListener(CHANGE_EVENT, callback);
+	// }
 
 	/**
 	 * @param {string} id
